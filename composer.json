@@ -16,7 +16,8 @@
     },
     "require": {
         "php": ">=5.6.0",
-        "vain/operation" : "dev-master"
+        "mmjitsu/vain-operation" : "dev-master",
+        "vain/event" : "dev-master"
     },
     "repositories": [
         {
@@ -42,6 +43,10 @@
         {
             "type": "git",
             "url": "http://gitlab.cosmonova.net.ua/mmjitsu/vain-operation.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/allflame/vain-event"
         }
     ],
     "config": {

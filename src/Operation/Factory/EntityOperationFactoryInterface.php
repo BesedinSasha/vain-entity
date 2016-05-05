@@ -2,31 +2,34 @@
 /**
  * Created by PhpStorm.
  * User: allflame
- * Date: 5/4/16
- * Time: 11:34 AM
+ * Date: 5/5/16
+ * Time: 10:20 AM
  */
-
 namespace Vain\Entity\Operation\Factory;
 
 use Vain\Entity\EntityInterface;
-use Vain\Entity\Operation\EntityOperationInterface;
+use Vain\Operation\OperationInterface;
 
 interface EntityOperationFactoryInterface
 {
     /**
      * @param EntityInterface $entity
      *
-     * @return EntityOperationInterface
+     * @return OperationInterface
      */
     public function create(EntityInterface $entity);
 
     /**
-     * @return EntityOperationInterface
+     * @param EntityInterface $entity
+     *
+     * @return OperationInterface
      */
     public function update(EntityInterface $entity);
 
     /**
-     * @return EntityOperationInterface
+     * @param EntityInterface $entity
+     *
+     * @return OperationInterface
      */
     public function delete(EntityInterface $entity);
 }

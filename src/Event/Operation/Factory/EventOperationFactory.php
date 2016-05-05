@@ -9,22 +9,24 @@
 namespace Vain\Entity\Event\Operation;
 
 use Vain\Entity\EntityInterface;
-use Vain\Entity\Event\Create\CreateEventOperation;
-use Vain\Entity\Event\Delete\DeleteEventOperation;
-use Vain\Entity\Event\Update\UpdateEventOperation;
-use Vaind\Id\Generator\IdGeneratorInterface;
+use Vain\Event\Dispatcher\EventDispatcherInterface;
+use Vain\Operation\Collection\Factory\CollectionFactoryInterface;
 
 class EventOperationFactory implements EventOperationFactoryInterface
 {
-    private $idGenerator;
+    private $collectionFactory;
+
+    private $eventDispatcher;
 
     /**
      * EventOperationFactory constructor.
-     * @param IdGeneratorInterface $idGenerator
+     * @param CollectionFactoryInterface $collectionFactory
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(IdGeneratorInterface $idGenerator)
+    public function __construct(CollectionFactoryInterface $collectionFactory, EventDispatcherInterface $eventDispatcher)
     {
-        $this->idGenerator = $idGenerator;
+        $this->collectionFactory = $collectionFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -32,7 +34,9 @@ class EventOperationFactory implements EventOperationFactoryInterface
      */
     public function create(EntityInterface $entity)
     {
-        return new CreateEventOperation($entity, $this->idGenerator->generate());
+        return $this->collectionFactory->create()
+            ->add(new EntityEventOperation($this->eventDispatcher, 'entity:create', $entity))
+            ->add(new EntityEventOperation($this->eventDispatcher, sprintf('%s:create', get_class($entity)), $entity));
     }
 
     /**
@@ -40,7 +44,9 @@ class EventOperationFactory implements EventOperationFactoryInterface
      */
     public function update(EntityInterface $entity)
     {
-        return new UpdateEventOperation($entity, $this->idGenerator->generate());
+        return $this->collectionFactory->create()
+            ->add(new EntityEventOperation($this->eventDispatcher, 'entity:update', $entity))
+            ->add(new EntityEventOperation($this->eventDispatcher, sprintf('%s:update', get_class($entity)), $entity));
     }
 
     /**
@@ -48,6 +54,8 @@ class EventOperationFactory implements EventOperationFactoryInterface
      */
     public function delete(EntityInterface $entity)
     {
-        return new DeleteEventOperation($entity, $this->idGenerator->generate());
+        return $this->collectionFactory->create()
+            ->add(new EntityEventOperation($this->eventDispatcher, 'entity:delete', $entity))
+            ->add(new EntityEventOperation($this->eventDispatcher, sprintf('%s:delete', get_class($entity)), $entity));
     }
 }

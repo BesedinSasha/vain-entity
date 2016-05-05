@@ -9,8 +9,9 @@
 namespace Vain\Entity\Event;
 
 use Vain\Entity\EntityInterface;
+use Vain\Event\EventInterface;
 
-interface EntityEventInterface
+interface EntityEventInterface extends EventInterface
 {
     /**
      * @return EntityInterface
