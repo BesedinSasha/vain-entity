@@ -1,5 +1,5 @@
 {
-    "name": "mmjitsu/vain-entity",
+    "name": "vain/entity",
     "type": "shared-package",
     "authors": [
         {
@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=5.6.0",
-        "mmjitsu/vain-operation" : "dev-master"
+        "vain/operation" : "dev-master"
     },
     "repositories": [
         {
